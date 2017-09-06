@@ -55,29 +55,106 @@ long BST<T>::number_nodes(Node<T> *r)
 }
 
 template<class T>
-Node<T> * BST<T>::mayor()
+Node<T> * BST<T>::supreme()
 {
   Node<T> *p=raiz;
 
   while(p){
     if(!(p->right))
       break;
-    p=p->left;
+    p=p->right;
   }
 
   return p;
 }
 
+
 template<class T>
 Node<T> * BST<T>::father(T data)
 {
-  Node<T> *p=raiz;
-  while(!p){
-    if(data<*p){
-      if(data->left==data)
-        return p;
+  Node<T> *walking=raiz;
+  Node<T> **p;
+
+  if(find(data,p)){
+    while(walking){
+      if(data<walking->data){       /////   consultamos y
+        if(data==walking->left->data)   ////  recorremos hacia
+          return walking;             ///// la izquierda
+        walking=walking->left;
+      }
+      else{
+        if(data==walking->right->data)    ///// consultamos
+          return walking;                   /// y recorremos
+        walking=walking->right;       //////  hacia la derecha
+      }
     }
-
   }
+  return NULL;
+}
 
+template<class T>
+Node<T>* BST<T>::brother(T data)
+{
+  Node<T> *padre=father(data);
+  if(data<padre->data)              ///// si el hijo es menor que el padre
+    return padre->right;            ////  retorna el hijo derecho
+  else
+    return padre->left;             ///// y viceversa
+}
+
+template<class T>
+Node<T>* BST<T>::uncle(T data)
+{
+  Node<T> *padre=father(data);
+  if(padre)
+    return brother(padre->data);
+  return NULL;
+}
+
+template<class T>
+T BST<T>::mayor()
+{
+  Node<T> *retornable=supreme();
+  if(retornable)
+    return retornable->data;
+  //else{
+    // retornar un valor nulo del
+    // tipo T que uno debe de implementar
+  //}
+}
+
+template<class T>
+T BST<T>::padre(T data)
+{
+  Node<T> *retornable=father(data);
+  if(retornable)
+    return retornable->data;
+  //else{
+    // retornar un valor nulo del
+    // tipo T que uno debe de implementar
+  //}
+}
+
+template<class T>
+T BST<T>::hermano(T data)
+{
+  Node<T> *retornable=brother(data);
+  if(retornable)
+    return retornable->data;
+  //else{
+    // retornar un valor nulo del
+    // tipo T que uno debe de implementar
+  //}
+}
+
+template<class T>
+T BST<T>::tio(T data)
+{
+  Node<T> *retornable =uncle(data);
+  if(retornable)
+    return retornable->data;
+  //else{
+    // retornar un valor nulo del
+    // tipo T que uno debe de implementar
+  //}
 }

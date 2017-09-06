@@ -11,6 +11,7 @@ struct Node
   T data;
   Node<T> *left;
   Node<T> *right;
+  Node(){}
   Node(T d):data(d),left(NULL),right(NULL){}
 };
 
@@ -21,6 +22,10 @@ class BST
   bool find(T ,Node<T> **&);
   void view(Node<T> *);
   long number_nodes(Node<T> *);
+  Node<T> * supreme();
+  Node<T> * father(T);
+  Node<T> * brother(T);
+  Node<T> * uncle(T);
 
 public:
 
@@ -28,8 +33,10 @@ public:
   void add(T );
   void print(){view(raiz);}
   long contar(){return number_nodes(raiz);}
-  Node<T> * mayor();
-  Node<T> * father(T );
+  T mayor();
+  T padre(T);
+  T hermano(T);
+  T tio(T);
 
 };
 
